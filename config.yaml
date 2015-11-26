@@ -5,3 +5,8 @@ options:
       Default mirror for downloading HHVM. You can find other mirrors at
       https://github.com/facebook/hhvm/wiki/Mirror
     type: string
+  app-path:
+    default: '/srv/app'
+    description: |
+      Default application path
+    type: string

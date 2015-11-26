@@ -15,6 +15,8 @@ from charmhelpers.fetch import (
 
 from shell import shell
 
+import hhvmlib
+
 config = hookenv.config()
 lsb = host.lsb_release()
 
@@ -29,13 +31,16 @@ def install_hhvm():
     remove_state('hhvm.available')
     hookenv.status_set('maintenance', 'Installing HHVM')
 
-    add_source('deb http://dl.hhvm.com/ubuntu '
-               '{} main'.format(lsb['DISTRIB_CODENAME']),
+    add_source('deb {} '
+               '{} main'.format(config['hhvm-mirror'],
+                                lsb['DISTRIB_CODENAME']),
                key='0x5a16e7281be7a449')
     apt_update()
     apt_install(['hhvm'])
 
     hookenv.status_set('maintenance', 'Installing HHVM completed.')
+
+    hhvmlib.install_composer()
 
     hookenv.status_set('active', 'ready!')
     set_state('hhvm.available')
