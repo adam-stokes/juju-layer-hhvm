@@ -25,6 +25,7 @@ def install_composer():
             'blocked',
             'Unable to download composer: {}'.format(sh.errors()))
         sys.exit(0)
+    shell("chmod +x /usr/local/bin/composer")
     hookenv.status_set('active', 'ready')
 
 
