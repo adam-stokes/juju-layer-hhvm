@@ -18,18 +18,12 @@ def install_composer():
     """ Installs composer
     """
     hookenv.status_set('maintenance', 'Installing composer')
-    sh = shell("curl -sS https://getcomposer.org/installer | php")
+    sh = shell("wget -q -O /usr/local/bin/composer "
+               "https://getcomposer.org/composer.phar")
     if sh.code > 0:
         hookenv.status_set(
             'blocked',
-            'Unable to install composer: {}'.format(sh.errors()))
-        sys.exit(0)
-
-    sh = shell("mv composer.phar /usr/local/bin/composer")
-    if sh.code > 0:
-        hookenv.status_set(
-            'blocked',
-            'Unable to move composer to bin path: {}'.format(sh.errors()))
+            'Unable to download composer: {}'.format(sh.errors()))
         sys.exit(0)
     hookenv.status_set('active', 'ready')
 
