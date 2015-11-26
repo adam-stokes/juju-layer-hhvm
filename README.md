@@ -13,6 +13,28 @@ By itself it doesn't do much but provide the HHVM runtime. When combined with
 the NGINX layer it will automatically configure the webserver for HHVM
 applications.
 
+# api
+
+Composer is installed for you and placed in the users $PATH. Making use of
+composer is simple:
+
+```
+from charmhelpers.core import hookenv
+import os
+from hhvmlib import composer
+
+config = hookenv.config()
+app_path = config['app-path']
+
+os.chdir(app_path)
+composer('install')
+
+# Or to update deps
+composer('update')
+```
+
+See https://getcomposer.org for more information
+
 # license
 
 The MIT License (MIT)
